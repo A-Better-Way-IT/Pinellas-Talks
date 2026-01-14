@@ -16,5 +16,5 @@ const app = initializeApp(firebaseConfig);
 export const db = getFirestore(app);
 export default app;
 
-
-console.log("Firebase Project ID is:", import.meta.env.VITE_FIREBASE_PROJECT_ID);
+// Test to check firebase.js configuration
+console.log("Firebase Project ID is:", import.meta.env.VITE_FIREBASE_PROJECT_ID); 
