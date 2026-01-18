@@ -66,3 +66,54 @@ button:focus-visible {
     background-color: #f9f9f9;
   }
 }
+
+
+/* Slider Form Styling */
+form {
+  margin-top: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+/* Label styling */
+label {
+  font-size: 1.2rem;
+  font-weight: 500;
+}
+
+/* Slider track */
+input {
+  width: 300px;
+  height: 8px;
+  border-radius: 5px;
+  background: #ddd;
+  outline: none;
+  -webkit-appearance: none;
+}
+
+/* Slider thumb for Webkit (Chrome, Safari) */
+input::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: #646cff;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+input::-webkit-slider-thumb:hover {
+  background: #61dafb;
+}
+
+/* Slider thumb for Firefox */
+input::-moz-range-thumb {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: #646cff;
+  cursor: pointer;
+  transition: background 0.3s;
+}
