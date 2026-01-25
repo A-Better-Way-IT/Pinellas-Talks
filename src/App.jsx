@@ -32,6 +32,7 @@ function App() {
           value={ageGroup}
           onChange={(e) => setAgeGroup(e.target.value)}
         >
+          // used some ageGroups for the timebeing
           <option value="">--Select--</option>
           <option value="18-25">18-25</option>
           <option value="26-45">26-45</option>
@@ -42,6 +43,7 @@ function App() {
 
       {/* Issues with sliders placeholder */}
       <div>
+        // Political issues will be displayed here
         <h2>Political Issues</h2>
         {issues.map((issue, index) => (
           <div key={index}>
