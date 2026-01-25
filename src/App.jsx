@@ -22,7 +22,6 @@ const questions = [
 ]
 
 function App() {
-<<<<<<< HEAD
   const [answers, setAnswers] = useState(() => {
     let initial = {}
     questions.forEach((q, i) => {
@@ -31,6 +30,7 @@ function App() {
     return initial
   })
 
+  const [touched, setTouched] = useState({})
   const [submitted, setSubmitted] = useState(false)
   const [loading, setLoading] = useState(false)
 
@@ -39,7 +39,13 @@ function App() {
       ...prev,
       [index]: Number(value)
     }))
+    setTouched(prev => ({
+      ...prev,
+      [index]: true
+    }))
   }
+
+  const allTouched = questions.every((q, i) => touched[i])
 
   async function handleSubmit(e) {
     e.preventDefault()
@@ -72,6 +78,7 @@ function App() {
           <p>Thank you for participating in the Pinellas County community survey.</p>
           <button onClick={() => {
             setSubmitted(false)
+            setTouched({})
             let reset = {}
             questions.forEach((q, i) => reset[i] = 5)
             setAnswers(reset)
@@ -94,7 +101,7 @@ function App() {
           <span>10 = Strongly Agree</span>
         </div>
       </header>
-
+      
       <form onSubmit={handleSubmit}>
         {questions.map((question, index) => (
           <div className="question-box" key={index}>
@@ -114,72 +121,16 @@ function App() {
           </div>
         ))}
 
-        <button type="submit" className="submit-btn" disabled={loading}>
+        <button type="submit" className="submit-btn" disabled={!allTouched || loading}>
           {loading ? 'Submitting...' : 'Submit'}
         </button>
+
+        {!allTouched && (
+          <p className="hint">Please answer all questions to submit</p>
+        )}
       </form>
     </div>
   )
 }
 
 export default App
-=======
-  // Optional minimal state to show selections
-  const [ageGroup, setAgeGroup] = useState(""); // user selection placeholder
-  const [isSubmitted, setIsSubmitted] = useState(false);
-
-  // These are just examples of issues
-  const issues = [
-    "Housing affordability",
-    "Public transportation",
-    "Environmental protection"
-  ];
-
-  // Placeholder submit handler
-  const handleSubmit = () => {
-    setIsSubmitted(true);
-  };
-
-  return (
-    <div>
-      {/* Survey title */}
-      <h1>Voter Concerns Survey</h1>
-
-      {/* Age group selection */}
-      <div>
-        <label>Please select your age group:</label>
-        <select
-          value={ageGroup}
-          onChange={(e) => setAgeGroup(e.target.value)}
-        >
-          <option value="">--Select--</option>
-          <option value="18-25">18-25</option>
-          <option value="26-45">26-45</option>
-          <option value="46-65">46-65</option>
-          <option value="66+">66+</option>
-        </select>
-      </div>
-
-      {/* Issues with sliders placeholder */}
-      <div>
-        <h2>Political Issues</h2>
-        {issues.map((issue, index) => (
-          <div key={index}>
-            <p>{issue}</p>
-            {/* Slider placeholder */}
-            <input type="range" min="1" max="10" />
-          </div>
-        ))}
-      </div>
-
-      {/* Submit button */}
-      <button onClick={handleSubmit}>Submit</button>
-
-      {/* Feedback placeholder */}
-      {isSubmitted && <p>Thank you for participating!</p>}
-    </div>
-  );
-}
-
-export default App;
->>>>>>> main
