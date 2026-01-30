@@ -2,6 +2,7 @@ import { useState } from 'react'
 import './App.css'
 import { db } from './firebase'
 import { collection, addDoc, serverTimestamp } from 'firebase/firestore'
+import { submitServey } from './services/surveyService';
 //import IssueList from "./features/survey-ui/IssueList";
 //import IssueSlider from "./features/survey-ui/IssueSlider";
 
@@ -54,6 +55,19 @@ function App() {
   async function handleSubmit(e) {
     e.preventDefault()
     setLoading(true)
+
+
+    try {  // Using the imported service function to submit the survey
+      
+      const docId = await submitServey("Pinellas", answers); 
+      console.log('Success! ID:', docId); 
+      setSubmitted(true);
+    } catch (err) {
+      alert(err.message);
+    } finally {
+      setLoading(false);
+    }
+  
 
     // Create the response object in the exact format specified
     const data = {
