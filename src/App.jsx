@@ -35,7 +35,10 @@ function App() {
       style={{
         backgroundColor: colors.background,  // full page background
         minHeight: "100vh",                  // ensures it fills the screen
-        padding: "20px"
+        width: "100%",       // full width
+        color: colors.textLight,
+        padding: "20px",
+        boxSizing: "border-box"
       }}
     >
       <h1 style={{ color: colors.textLight }}>Welcome to the Web Survey App</h1>
