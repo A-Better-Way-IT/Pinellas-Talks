@@ -30,22 +30,6 @@ const questions = [
 ]
 
 function App() {
-  return (
-    <div
-      style={{
-        backgroundColor: colors.background,  // full page background
-        minHeight: "100vh",                  // ensures it fills the screen
-        width: "100%",       // full width
-        color: colors.textLight,
-        padding: "20px",
-        boxSizing: "border-box"
-      }}
-    >
-      <h1 style={{ color: colors.textLight }}>Welcome to the Web Survey App</h1>
-      <IssueList />
-    </div>
-  );
-}
   const [answers, setAnswers] = useState(() => {
     let initial = {}
     questions.forEach((q) => {
@@ -91,6 +75,18 @@ function App() {
 
   if (submitted) {
     return (
+      <div 
+      className="app"
+      style={{
+      "--bg": colors.background,
+      "--text": colors.textDark,
+      "--accent": colors.accentLight,
+      "--red": colors.red,
+      backgroundColor: "var(--bg)",
+      color: "var(--text)",
+      minHeight: "100vh"
+     }}
+    >
       <div className="container">
         <div className="thankyou">
           <h1>Thank You!</h1>
@@ -109,9 +105,7 @@ function App() {
       </div>
     )
   }
-
-  return (
-    <div className="container">
+      
       <header>
         <h1>Community Issues Survey</h1>
         <span className="badge">Pinellas County, Florida</span>
