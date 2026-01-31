@@ -6,8 +6,8 @@
 
 body {
   font-family: Arial, sans-serif;
-  background: #f0f0f0;
-  color: #333;
+  background: var(--bg);
+  color: var(--text);
 }
 
 .container {
@@ -24,7 +24,7 @@ form {
 }
 
 header {
-  background: white;
+  background: var(--accent);
   padding: 25px;
   border-radius: 8px;
   text-align: center;
@@ -38,8 +38,8 @@ header h1 {
 }
 
 .badge {
-  background: #2563eb;
-  color: white;
+  background: var(--text);
+  color: var(--bg);
   padding: 6px 16px;
   border-radius: 20px;
   font-size: 14px;
@@ -62,10 +62,11 @@ header p {
 }
 
 .question-box {
-  background: white;
+  background: var(--bg);
   padding: 20px;
   margin-bottom: 12px;
   border-radius: 8px;
+  border: 1px solid var(--accent);
   box-shadow: 0 2px 5px rgba(0,0,0,0.1);
 }
 
@@ -88,7 +89,7 @@ header p {
   -webkit-appearance: none;
   width: 22px;
   height: 22px;
-  background: #2563eb;
+  background: var(--text);
   border-radius: 50%;
   cursor: pointer;
   border: 2px solid white;
@@ -133,8 +134,8 @@ header p {
   max-width: 300px;
   margin: 30px auto;
   padding: 14px;
-  background: #2563eb;
-  color: white;
+  background: var(--text);
+  color: var(--bg);
   border: none;
   border-radius: 8px;
   font-size: 16px;
@@ -143,7 +144,7 @@ header p {
 }
 
 .submit-btn:hover:not(:disabled) {
-  background: #1d4ed8;
+  background: var(--red);
 }
 
 .submit-btn:disabled {
@@ -159,7 +160,7 @@ header p {
 }
 
 .thankyou {
-  background: white;
+  background: var(--bg);
   padding: 50px 30px;
   border-radius: 8px;
   text-align: center;
@@ -168,7 +169,7 @@ header p {
 }
 
 .thankyou h1 {
-  color: #2563eb;
+  color: var(--text);
   margin-bottom: 15px;
 }
 
