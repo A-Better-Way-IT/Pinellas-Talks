@@ -1,16 +1,36 @@
-# React + Vite
+# Pinellas County Voter Concerns Survey
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A full-stack React application cretaed to collect community feedback on local political and infrastructure issues in Florida, Pinellas County. The website features a public survey and a secure, authenticated admin dashboard for viewing survey data.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **Interactive Survey Interface:** Users can rate their agreement on various local issues using custom 1-10 sliders.
+- **Client-Side Routing:** Built with `react-router-dom` to handle view switching without page reloads.
+- **Secure Admin Dashboard:** A protected `/admin` route that uses Firebase Authentication to act as a "Bouncer," redirecting unauthenticated users to a login screen.
+- **Real-Time Database:** Integrates with Firebase Cloud Firestore to store survey responses with server-side timestamps and fetch aggregate data for the dashboard.
 
-## React Compiler
+## Tech Stack
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- **Frontend:** React, React Router (`react-router-dom`), vanilla CSS
+- **Build Tool:** Vite + SWC/Babel Fast Refresh
+- **Backend/BaaS:** Firebase (Cloud Firestore, Authentication)
 
-## Expanding the ESLint configuration
+---
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## Local Installation & Setup
+
+To run this project locally, ensure you have Node.js installed, then follow these steps:
+
+**1. Clone the repository and navigate into the directory:**
+
+```bash
+git clone <your-repo-url>
+cd <your-project-folder>
+```
+
+**2. Run commands in terminal:**
+
+```bash
+npm install
+npm run dev
+```
