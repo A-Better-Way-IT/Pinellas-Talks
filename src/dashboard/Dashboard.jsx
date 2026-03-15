@@ -7,6 +7,7 @@ import * as XLSX from "xlsx";
 import "./Dashboard.css";
 
 function Dashboard() {
+
   const [results, setResults] = useState([]);
   const [loading, setLoading] = useState(true);
   const [user, setUser] = useState(null);
@@ -14,6 +15,7 @@ function Dashboard() {
   const navigate = useNavigate();
 
   useEffect(() => {
+
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       if (!currentUser) {
         navigate("/login");
@@ -35,6 +37,7 @@ function Dashboard() {
     };
 
     return () => unsubscribe();
+
   }, [navigate]);
 
   const handleLogout = async () => {
@@ -48,6 +51,7 @@ function Dashboard() {
   }, [results]);
 
   const filteredResults = useMemo(() => {
+
     const filtered =
       selectedCounty === "All"
         ? results
@@ -56,9 +60,11 @@ function Dashboard() {
     return filtered.sort(
       (a, b) => b.submittedAt?.toDate() - a.submittedAt?.toDate()
     );
+
   }, [results, selectedCounty]);
 
   const sortedIssues = useMemo(() => {
+
     if (!filteredResults.length) return [];
 
     return Object.keys(filteredResults[0].responses).sort((a, b) => {
@@ -66,29 +72,37 @@ function Dashboard() {
       const numB = parseInt(b.replace(/\D/g, ""));
       return numA - numB;
     });
+
   }, [filteredResults]);
 
-  // Calculate issue averages
   const issueAverages = useMemo(() => {
+
     const totals = {};
     const counts = {};
 
     filteredResults.forEach(entry => {
+
       Object.entries(entry.responses || {}).forEach(([id, score]) => {
+
         totals[id] = (totals[id] || 0) + score;
         counts[id] = (counts[id] || 0) + 1;
+
       });
+
     });
 
     const avg = {};
+
     Object.keys(totals).forEach(id => {
       avg[id] = totals[id] / counts[id];
     });
 
     return avg;
+
   }, [filteredResults]);
 
   const overallAverage = useMemo(() => {
+
     let total = 0;
     let count = 0;
 
@@ -98,6 +112,7 @@ function Dashboard() {
     });
 
     return count ? (total / count).toFixed(2) : "0";
+
   }, [issueAverages]);
 
   const sortedByScore = Object.entries(issueAverages).sort(
@@ -107,12 +122,13 @@ function Dashboard() {
   const topIssues = sortedByScore.slice(0, 3);
   const lowestIssues = sortedByScore.slice(-3).reverse();
 
-  // Format current data
   const getFormattedData = () => {
-    return filteredResults.map(entry=>{
-      const dateString = entry.submittedAt 
-      ? entry.submittedAt.toDate().toLocaleDateString()
-      : "N/A";
+
+    return filteredResults.map(entry => {
+
+      const dateString = entry.submittedAt
+        ? entry.submittedAt.toDate().toLocaleDateString()
+        : "N/A";
 
       const row = {
         "Submission ID": entry.id,
@@ -120,7 +136,7 @@ function Dashboard() {
         "County": entry.county || "Pinellas",
       };
 
-      if(entry.ageGroup) row["Age Group"] = entry.ageGroup;
+      if (entry.ageGroup) row["Age Group"] = entry.ageGroup;
 
       sortedIssues.forEach(issue => {
         const issueNumber = issue.replace(/\D/g, "");
@@ -128,73 +144,89 @@ function Dashboard() {
       });
 
       return row;
+
     });
+
   };
 
-  //Export to CSV
   const exportToCSV = () => {
+
     const data = getFormattedData();
-    if(data.length === 0) return alert("No data to export.");
+    if (data.length === 0) return alert("No data to export.");
 
     const headers = Object.keys(data[0]);
+
     const csvRows = data.map(row => {
       return headers.map(header => `"${row[header]}"`).join(",");
-    })
+    });
 
     const csvContent = [headers.join(","), ...csvRows].join("\n");
+
     const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
+
     const url = URL.createObjectURL(blob);
+
     const link = document.createElement("a");
+
     link.setAttribute("href", url);
     link.setAttribute("download", "community_survey_data.csv");
-    link.style.visibility = "hidden";
+
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
+
   };
 
-  //Export to Excel
   const exportToXLSX = () => {
+
     const data = getFormattedData();
-    if(data.length === 0) return alert("No data to export.");
+    if (data.length === 0) return alert("No data to export.");
 
     const worksheet = XLSX.utils.json_to_sheet(data);
     const workbook = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(workbook, worksheet, "Survey Responses");
-    XLSX.writeFile(workbook, `community_survey_data${selectedCounty !== "All" ? `_${selectedCounty}` : ""}.xlsx`);
-  };
 
+    XLSX.utils.book_append_sheet(workbook, worksheet, "Survey Responses");
+
+    XLSX.writeFile(
+      workbook,
+      `community_survey_data${selectedCounty !== "All" ? `_${selectedCounty}` : ""}.xlsx`
+    );
+
+  };
 
   if (loading) return <div className="loading">Verifying Admin Access...</div>;
 
   return (
+
     <div className="dashboard-container">
+
       <header className="dashboard-header">
+
         <div>
           <h1>Survey Administration Dashboard</h1>
-          <p className="subtext">
-            Pinellas County Survey Data Overview
-          </p>
+          <p className="subtext">Pinellas County Survey Data Overview</p>
         </div>
-        
-        {/* Large Action Buttons */}
+
         <div className="header-actions">
-          <button onClick={exportToCSV} className="action-btn csv-btn">
+
+          <button onClick={exportToCSV} className="action-btn">
             Export CSV
           </button>
-          
-          <button onClick={exportToXLSX} className="action-btn xlsx-btn">
+
+          <button onClick={exportToXLSX} className="action-btn">
             Export XLSX
           </button>
-          
+
           <button onClick={handleLogout} className="action-btn logout-btn">
             Logout
           </button>
+
         </div>
+
       </header>
 
-      {/* SUMMARY CARDS */}
       <section className="stats-grid">
+
         <div className="card">
           <h3>Total Submissions</h3>
           <p className="big-number">{filteredResults.length}</p>
@@ -207,72 +239,94 @@ function Dashboard() {
 
         <div className="card">
           <h3>Filter by County</h3>
+
           <select
             value={selectedCounty}
             onChange={(e) => setSelectedCounty(e.target.value)}
           >
+
             {counties.map(c => (
               <option key={c}>{c}</option>
             ))}
+
           </select>
+
         </div>
 
         <div className="card">
           <h3>Administrator</h3>
           <p>{user?.email}</p>
         </div>
+
       </section>
 
-      {/* INSIGHTS */}
       <section className="insights-grid">
+
         <div className="card">
           <h3>Top 3 Highest Rated Issues</h3>
+
           {topIssues.map(([id, score]) => (
             <p key={id}>
-              {id.replace(/\D/g, "")} —{" "}
-              <strong>{score.toFixed(2)}</strong>
+              {id.replace(/\D/g, "")} — <strong>{score.toFixed(2)}</strong>
             </p>
           ))}
+
         </div>
 
         <div className="card">
+
           <h3>Top 3 Lowest Rated Issues</h3>
+
           {lowestIssues.map(([id, score]) => (
             <p key={id}>
-              {id.replace(/\D/g, "")} —{" "}
-              <strong>{score.toFixed(2)}</strong>
+              {id.replace(/\D/g, "")} — <strong>{score.toFixed(2)}</strong>
             </p>
           ))}
+
         </div>
+
       </section>
 
-      {/* TABLE */}
       <section className="table-section">
+
         <h2>Submission History</h2>
 
         <div className="table-wrapper">
+
           <table>
+
             <thead>
+
               <tr>
                 <th>Date</th>
                 <th>County</th>
+
                 {sortedIssues.map(issue => (
                   <th key={issue}>
                     {issue.replace(/\D/g, "")}
                   </th>
                 ))}
+
               </tr>
+
             </thead>
+
             <tbody>
+
               {filteredResults.map(entry => (
+
                 <tr key={entry.id}>
-                  <td>
-                    {entry.submittedAt?.toDate().toLocaleDateString()}
-                  </td>
+
+                  <td>{entry.submittedAt?.toDate().toLocaleDateString()}</td>
+
                   <td>{entry.county}</td>
+
                   {sortedIssues.map(issue => {
+
                     const score = entry.responses[issue];
+
                     return (
+
                       <td
                         key={issue}
                         className={
@@ -285,16 +339,55 @@ function Dashboard() {
                       >
                         {score}
                       </td>
+
                     );
+
                   })}
+
                 </tr>
+
               ))}
+
             </tbody>
+
           </table>
+
         </div>
+
       </section>
+
+      {/* QUESTION KEY */}
+
+      <section className="card" style={{ marginTop: "40px" }}>
+
+        <h2>Survey Question Key</h2>
+
+        <ol>
+
+          <li>Increase funding for public transportation</li>
+          <li>Tax incentives for local businesses</li>
+          <li>Invest in renewable energy</li>
+          <li>Increase funding for public schools</li>
+          <li>Raise Florida minimum wage</li>
+          <li>Increase funding for law enforcement programs</li>
+          <li>Prioritize affordable housing development</li>
+          <li>Strengthen environmental protections</li>
+          <li>Improve rural healthcare access</li>
+          <li>Support small business owners</li>
+          <li>Property tax restructuring</li>
+          <li>Expand mental health services</li>
+          <li>Prioritize road maintenance</li>
+          <li>Increase government transparency</li>
+          <li>Improve disaster preparedness</li>
+
+        </ol>
+
+      </section>
+
     </div>
+
   );
+
 }
 
 export default Dashboard;
