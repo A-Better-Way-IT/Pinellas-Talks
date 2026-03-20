@@ -7,7 +7,7 @@ import { submitSurvey } from './services/surveyService';
 //import IssueSlider from "./features/survey-ui/IssueSlider";
 import React from 'react';
 import IssueList from './components/IssueList';
-import colors from './color';
+//import colors from './color';
 
 const API_BASE = "http://127.0.0.1:5000"
 
