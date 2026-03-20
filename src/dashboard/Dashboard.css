@@ -93,6 +93,8 @@
 /* STATS GRID */
 .stats-grid {
   display: flex;
+  justify-content: center;
+  text-align: center;
   gap: 20px;
   margin-bottom: 50px;
   flex-wrap: wrap;

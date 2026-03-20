@@ -209,11 +209,11 @@ function Dashboard() {
 
         <div className="header-actions">
 
-          <button onClick={exportToCSV} className="action-btn">
+          <button onClick={exportToCSV} className="action-btn csv-btn">
             Export CSV
           </button>
 
-          <button onClick={exportToXLSX} className="action-btn">
+          <button onClick={exportToXLSX} className="action-btn xlsx-btn">
             Export XLSX
           </button>
 
@@ -232,10 +232,6 @@ function Dashboard() {
           <p className="big-number">{filteredResults.length}</p>
         </div>
 
-        <div className="card">
-          <h3>Overall Average Score</h3>
-          <p className="big-number">{overallAverage}</p>
-        </div>
 
         <div className="card">
           <h3>Filter by County</h3>
@@ -347,6 +343,15 @@ function Dashboard() {
                 </tr>
 
               ))}
+
+              <tr style={{ backgroundColor: "var(--blue-light)", fontWeight: "600" }}>
+                <td colSpan="2" style={{ textAlign: "right", paddingRight: "15px" }}>Average Score</td>
+                {sortedIssues.map(issue => (
+                  <td key={`avg-${issue}`}>
+                    {issueAverages[issue] ? issueAverages[issue].toFixed(2) : "N/A"}
+                  </td>
+                ))}
+              </tr>
 
             </tbody>
 
