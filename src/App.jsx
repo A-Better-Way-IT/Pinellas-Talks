@@ -33,10 +33,10 @@ function App() {
   const [answers, setAnswers] = useState(() => {
     let initial = {}
     questions.forEach((q) => {
-      initial[q.id] = 5
-    })
+      initial[q.id] = null;
+    });
     return initial
-  })
+  });
 
   const [touched, setTouched] = useState({})
   const [submitted, setSubmitted] = useState(false)
@@ -116,10 +116,12 @@ function App() {
               type="range"
               min="1"
               max="10"
-              value={answers[question.id]}
+              value={answers[question.id]?? 1}
               onChange={(e) => handleSlider(question.id, e.target.value)}
             />
-            <div className="value-bubble">{answers[question.id]}</div>
+            <div className="value-bubble">
+            {touched[question.id] ? answers[question.id] : "-"}
+            </div>
             <div className="tick-marks">
               <span>1</span><span>2</span><span>3</span><span>4</span><span>5</span>
               <span>6</span><span>7</span><span>8</span><span>9</span><span>10</span>
