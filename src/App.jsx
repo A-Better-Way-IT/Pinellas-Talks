@@ -12,21 +12,28 @@ import Dashboard from './dashboard/Dashboard';
 import colors from './color';
 
 const questions = [
-  { id: "issue_id_01", text: "The government should increase funding for public transportation in Pinellas County." },
-  { id: "issue_id_02", text: "Local businesses should receive tax incentives to create more jobs in Florida." },
-  { id: "issue_id_03", text: "The state should invest more in renewable energy sources." },
-  { id: "issue_id_04", text: "Public schools should receive increased funding for technology and resources." },
-  { id: "issue_id_05", text: "The minimum wage in Florida should be raised to match the cost of living." },
-  { id: "issue_id_06", text: "Local law enforcement should receive more funding for community programs." },
-  { id: "issue_id_07", text: "The county should prioritize affordable housing development." },
-  { id: "issue_id_08", text: "Environmental regulations should be strengthened to protect Florida's coastlines." },
-  { id: "issue_id_09", text: "Healthcare services should be more accessible in rural areas of the county." },
-  { id: "issue_id_10", text: "The government should provide more support for small business owners." },
-  { id: "issue_id_11", text: "Property taxes should be restructured to benefit long-term residents." },
-  { id: "issue_id_12", text: "The county should expand mental health services and resources." },
-  { id: "issue_id_13", text: "Infrastructure spending should prioritize road maintenance and repairs." },
-  { id: "issue_id_14", text: "Local government should increase transparency in budget decisions." },
-  { id: "issue_id_15", text: "The state should provide more resources for disaster preparedness." }
+  { id: "issue_id_01", text: "The federal government should do something about the affordability of groceries." },
+  { id: "issue_id_02", text: "The federal government should do something to prevent investors from driving up the prices of single family homes." },
+  { id: "issue_id_03", text: "The federal government should increase controls over the quality of food." },
+  { id: "issue_id_04", text: "Your representative in Congress should submit laws to benefit your community and not just vote on laws that other representatives propose." },
+  { id: "issue_id_05", text: "The federal government should change the tax code so that billion dollar companies pay the same tax percentage as small family owned companies." },
+  { id: "issue_id_06", text: "Taxes on senior citizens who earn less than $100,000 per year should be eliminated as soon as an individual turns 65 years old, and use the taxes from billion dollar companies to fund the tax break for seniors." },
+  { id: "issue_id_07", text: "The federal government should increase funding for public transportation." },
+  { id: "issue_id_08", text: "The federal government should provide tax incentives for businesses with less than 50 employees." },
+  { id: "issue_id_09", text: "The federal government should invest in renewable energy." },
+  { id: "issue_id_10", text: "The federal government should increase funding for public schools." },
+  { id: "issue_id_11", text: "The federal government should raise Florida's minimum wage." },
+  { id: "issue_id_12", text: "The federal government should increase funding for law enforcement programs." },
+  { id: "issue_id_13", text: "The federal government should prioritize affordable housing development." },
+  { id: "issue_id_14", text: "The federal government should strengthen environmental protections." },
+  { id: "issue_id_15", text: "The federal government should improve rural healthcare access." },
+  { id: "issue_id_16", text: "The federal government should support small business owners through grants." },
+  { id: "issue_id_17", text: "The federal government should implement a flat income tax of 15% for all." },
+  { id: "issue_id_18", text: "The federal government should expand mental health services." },
+  { id: "issue_id_19", text: "The federal government should prioritize road maintenance." },
+  { id: "issue_id_20", text: "The federal government should increase government transparency." },
+  { id: "issue_id_21", text: "The federal government should improve disaster preparedness." },
+  { id: "issue_id_22", text: "The federal government should protect the beaches of Pinellas County by restricting all companies statewide from polluting into the canals that lead to the gulf waters." }
 ];
 
 function App() {
@@ -111,7 +118,7 @@ function App() {
           <div className="app">
             <div className="container">
               <header>
-                <h1>Community Issues Survey</h1>
+                <h1>Pinellas Talks</h1>
                 <span className="badge">Pinellas County, Florida</span>
                 <p>Rate your agreement with each statement from 1-10</p>
                 <div className="scale-info">
@@ -147,7 +154,7 @@ function App() {
               <footer style={{ marginTop: '50px', textAlign: 'center' }}>
                 <button 
                   onClick={() => window.location.href='/login'} 
-                  style={{ opacity: 0.2, fontSize: '11px', background: 'none', border: 'none', cursor: 'pointer' }}
+                  style={{fontSize: '11px', background: colors.text, border: 'none', cursor: 'pointer' }}
                 >
                   Admin Access
                 </button>
