@@ -3,7 +3,7 @@ import './App.css';
 import { db, auth } from './firebase'; 
 import { onAuthStateChanged } from 'firebase/auth';
 import { submitSurvey } from './services/surveyService';
-import { Routes, Route } from 'react-router-dom'; // Import Routes and Route for routing
+import { Routes, Route, Navigate } from 'react-router-dom'; //Routers for page navigation
 
 // Component Imports
 import IssueList from './components/IssueList';
@@ -36,6 +36,19 @@ const questions = [
   { id: "issue_id_22", text: "The federal government should protect the beaches of Pinellas County by restricting all companies statewide from polluting into the canals that lead to the gulf waters." }
 ];
 
+// Strict security to protect the admin dashboard
+const ProtectedRoute = ({ children, user, isAuthReady }) => {
+  if (!isAuthReady) {
+    return <div style={{textAlign: 'center', marginTop: '100px', fontSize: '18px'}}>Securely verifying credentials...</div>;
+  }
+  
+  if (!user) {
+    return <Navigate to="/login" replace />;
+  }
+  
+  return children;
+};
+
 function App() {
   const [answers, setAnswers] = useState(() => {
     let initial = {};
@@ -49,20 +62,17 @@ function App() {
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  const [view, setView] = useState('survey'); // 'survey', 'login', or 'admin'
   const [user, setUser] = useState(null);
+  const [isAuthReady, setIsAuthReady] = useState(false);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
-      if (currentUser) {
-        setView('admin'); // Auto-switch to dashboard if already logged in
-      }
+      setIsAuthReady(true); 
     });
     return () => unsubscribe();
   }, []);
 
-  // --- HANDLERS ---
   function handleSlider(issueId, value) {
     setAnswers(prev => ({
       ...prev,
@@ -165,8 +175,15 @@ function App() {
       } />
 
       {/* ADMIN & AUTH ROUTES */}
-      <Route path="/admin" element={<Dashboard />} />
-      <Route path="/login" element={<Login />} />
+      <Route path="/admin" element={
+        <ProtectedRoute user={user} isAuthReady={isAuthReady}>
+          <Dashboard />
+        </ProtectedRoute>
+      } />
+      
+      <Route path="/login" element={
+        user ? <Navigate to="/admin" replace /> : <Login />
+      } />
       <Route path="/auth" element={<Login />} />
     </Routes>
   );
