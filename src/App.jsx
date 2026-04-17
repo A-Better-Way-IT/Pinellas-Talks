@@ -167,7 +167,7 @@ function App() {
 
               <footer style={{ marginTop: '50px', textAlign: 'center' }}>
                 <button 
-                  onClick={() => window.location.href='/login'} 
+                  onClick={() => window.location.href='/Pinellas-Talks/login'} 
                   style={{fontSize: '11px', background: colors.text, border: 'none', cursor: 'pointer' }}
                 >
                   Admin Access
